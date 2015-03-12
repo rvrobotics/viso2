@@ -1,0 +1,20 @@
+image_width: 1226
+image_height: 370
+camera_name: prosilica
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [721.537, 0, 609.559, 0, 721.537, 172.854, 0, 0, 1]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [0, 0, 0, 0, 0]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1, 0, 0, 0, 1, 0, 0, 0, 1]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [721.537, 0, 609.559, 0, 0, 721.537, 172.854, 0, 0, 0, 1, 0]

@@ -1,0 +1,29 @@
+<launch>
+	<rosparam param="use_sim_time">
+          true
+        </rosparam>
+
+	<!-- Arguments -->
+	<arg name="bagfile" default="/home/rrc/catkin_ws/src/viso2-hydro/data/kitti_06.bag"/> <!-- Your bagfile here -->
+	<arg name="camera" default="/kitti_stereo" /> <!-- The namespace where images are published -->
+	<arg name="disparity_params" default="/home/rrc/catkin_ws/src/viso2-hydro/data/disparity_params.yml"/> <!-- Camera calibration parameters -->
+
+	<param name="/use_sim_time" value="true"/>
+
+	<!-- Run the rosbag -->
+	<node pkg="rosbag" type="play" name="rosbag" args="--clock $(arg bagfile)"/>
+
+	<!-- Run the ROS package stereo_image_proc -->
+	<group ns="$(arg camera)" >
+		<node pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc">
+	    	<rosparam file="$(arg disparity_params)"/>
+		</node>
+	</group>
+
+	<!-- Run the viso2_ros package -->
+	<node pkg="viso2_ros" type="stereo_odometer" name="stereo_odometer" output="screen">
+		<remap from="stereo" to="$(arg camera)"/>
+		<remap from="image" to="image_rect"/>
+	</node>
+	
+</launch>
